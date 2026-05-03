@@ -8,6 +8,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('USER');
+  const [localError, setLocalError] = useState('');
   const { user, register, error } = useAuth();
   const navigate = useNavigate();
 
@@ -24,8 +25,23 @@ const Register = () => {
     }
   }, [user, navigate]);
 
+  const validatePassword = (pass) => {
+    if (pass.length < 8) return "Password must be at least 8 characters long.";
+    if (!/[A-Z]/.test(pass)) return "Password must contain at least one uppercase letter.";
+    if (!/[a-z]/.test(pass)) return "Password must contain at least one lowercase letter.";
+    if (!/\d/.test(pass)) return "Password must contain at least one number.";
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(pass)) return "Password must contain at least one special character.";
+    return "";
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLocalError('');
+    const pwdError = validatePassword(password);
+    if (pwdError) {
+      setLocalError(pwdError);
+      return;
+    }
     await register(name, email, password, role);
   };
 
@@ -42,9 +58,9 @@ const Register = () => {
             <p style={{ color: '#94a3b8' }}>Join the AutoServe platform</p>
           </div>
 
-          {error && (
+          {(error || localError) && (
             <div className="badge badge-rejected mb-4" style={{ display: 'block', textAlign: 'center', padding: '12px', borderRadius: '8px' }}>
-              {error}
+              {localError || error}
             </div>
           )}
 
@@ -77,9 +93,12 @@ const Register = () => {
                 type="password" 
                 className="modern-input" 
                 value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (localError) setLocalError('');
+                }} 
                 required 
-                minLength="6"
+                minLength="8"
                 placeholder="Create a password"
               />
             </div>

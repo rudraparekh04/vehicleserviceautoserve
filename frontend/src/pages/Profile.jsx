@@ -1,5 +1,6 @@
 import { useAuth } from '../context/AuthContext';
 import { User, Mail, Shield } from 'lucide-react';
+import MyGarage from '../components/MyGarage';
 
 const Profile = () => {
   const { user } = useAuth();
@@ -47,6 +48,8 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      {user.role === 'USER' && <MyGarage />}
     </div>
   );
 };

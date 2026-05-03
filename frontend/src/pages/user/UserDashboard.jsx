@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { Calendar, CheckCircle, Clock, MapPin } from 'lucide-react';
+import { Calendar, CheckCircle, Clock, MapPin, Plus, Car } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import MyGarage from '../../components/MyGarage';
 
 const UserDashboard = () => {
   const { api } = useAuth();
@@ -41,6 +42,11 @@ const UserDashboard = () => {
       </div>
 
       <div className="container mb-12">
+        {/* Garage Section */}
+        <div style={{ marginBottom: '4rem' }}>
+          <MyGarage />
+        </div>
+
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem', position: 'relative' }}>
           <h2 style={{ color: 'var(--primary)', margin: 0 }}>My Bookings</h2>
         </div>

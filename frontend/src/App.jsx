@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
 
 // Pages
@@ -12,6 +13,7 @@ import UserDashboard from './pages/user/UserDashboard';
 import GarageDashboard from './pages/garage/GarageDashboard';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import Profile from './pages/Profile';
+import Services from './pages/Services';
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/services" element={<Services />} />
             <Route path="/garage/:id" element={<GarageDetails />} />
 
             {/* Common Authenticated Routes */}
@@ -46,6 +49,7 @@ function App() {
             </Route>
           </Routes>
         </main>
+        <Footer />
       </AuthProvider>
     </Router>
   );

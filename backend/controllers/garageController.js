@@ -1,4 +1,5 @@
 const Service = require('../models/Service');
+const User = require('../models/User');
 
 // @desc    Get all services for logged in garage owner
 // @route   GET /api/garage/services
@@ -75,3 +76,18 @@ exports.getGarageServices = async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 }
+
+// @desc    Get all services globally
+// @route   GET /api/garage/all-services
+// @access  Public
+exports.getAllServices = async (req, res) => {
+  try {
+    const services = await Service.find().populate({
+      path: 'garageOwnerId',
+      select: 'name email'
+    });
+    res.status(200).json({ success: true, count: services.length, data: services });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};

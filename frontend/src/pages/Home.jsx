@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { Car, Wrench, ShieldCheck, MapPin, Users, Building2, Star } from 'lucide-react';
 
 const Home = () => {
-  const { api } = useAuth();
+  const { api, user } = useAuth();
   const [garages, setGarages] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -36,7 +36,13 @@ const Home = () => {
           </p>
           <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
             <a href="#garages" className="btn btn-white" style={{ padding: '12px 30px', fontSize: '1.1rem', borderRadius: '30px' }}>Find a Garage</a>
-            <Link to="/register" className="btn btn-white-outline" style={{ padding: '12px 30px', fontSize: '1.1rem', borderRadius: '30px' }}>Become a Partner</Link>
+            {!user ? (
+              <Link to="/register" className="btn btn-white-outline" style={{ padding: '12px 30px', fontSize: '1.1rem', borderRadius: '30px' }}>Become a Partner</Link>
+            ) : (
+              <Link to="/profile" className="btn btn-white-outline" style={{ padding: '12px 30px', fontSize: '1.1rem', borderRadius: '30px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Car size={20} /> My Garage
+              </Link>
+            )}
           </div>
         </div>
       </section>

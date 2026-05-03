@@ -1,6 +1,6 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Wrench, LogOut, User, LayoutDashboard } from 'lucide-react';
+import { Wrench, LogOut, User, LayoutDashboard, List } from 'lucide-react';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -28,16 +28,20 @@ const Navbar = () => {
         </Link>
         
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+          <NavLink to="/services" className="nav-link">
+            <List size={18} />
+            <span>Services</span>
+          </NavLink>
           {user ? (
             <>
-              <Link to="/profile" className="flex-between" style={{ gap: '5px', color: 'var(--text-muted)' }}>
+              <NavLink to="/profile" className="nav-link">
                 <User size={18} />
                 <span>Profile</span>
-              </Link>
-              <Link to={getDashboardLink()} className="flex-between" style={{ gap: '5px', color: 'var(--text-muted)' }}>
+              </NavLink>
+              <NavLink to={getDashboardLink()} className="nav-link">
                 <LayoutDashboard size={18} />
                 <span>Dashboard</span>
-              </Link>
+              </NavLink>
               <button onClick={handleLogout} className="btn btn-secondary flex-between" style={{ gap: '5px' }}>
                 <LogOut size={16} />
                 <span>Logout</span>
