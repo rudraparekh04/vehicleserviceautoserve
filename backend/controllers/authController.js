@@ -91,7 +91,9 @@ exports.refresh = async (req, res) => {
 exports.logout = async (req, res) => {
   res.cookie('refreshToken', 'none', {
     expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none'
   });
 
   res.status(200).json({
@@ -133,7 +135,8 @@ const sendTokenResponse = (user, statusCode, res) => {
       Date.now() + 7 * 24 * 60 * 60 * 1000 // 7 days
     ),
     httpOnly: true,
-    // secure: process.env.NODE_ENV === 'production' // Set to true in production
+    secure: true,
+    sameSite: 'none'
   };
 
   res
