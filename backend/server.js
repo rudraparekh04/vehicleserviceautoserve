@@ -21,7 +21,7 @@ app.use(cookieParser());
 
 // Enable CORS
 app.use(cors({
-  origin: 'http://localhost:5173', // Vite default port
+  origin: ['http://localhost:5173', 'https://vehicleserviceautoserve.vercel.app', process.env.CLIENT_URL],
   credentials: true
 }));
 
