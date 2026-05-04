@@ -67,15 +67,15 @@ UserSchema.pre('save', async function() {
 
 // Sign JWT Access Token
 UserSchema.methods.getSignedJwtAccessToken = function() {
-  return jwt.sign({ id: this._id, role: this.role }, process.env.JWT_ACCESS_SECRET, {
-    expiresIn: process.env.JWT_ACCESS_EXPIRE
+  return jwt.sign({ id: this._id, role: this.role }, process.env.JWT_ACCESS_SECRET || 'mysecretaccesskey123', {
+    expiresIn: process.env.JWT_ACCESS_EXPIRE || '15m'
   });
 };
 
 // Sign JWT Refresh Token
 UserSchema.methods.getSignedJwtRefreshToken = function() {
-  return jwt.sign({ id: this._id }, process.env.JWT_REFRESH_SECRET, {
-    expiresIn: process.env.JWT_REFRESH_EXPIRE
+  return jwt.sign({ id: this._id }, process.env.JWT_REFRESH_SECRET || 'mysecretrefreshkey456', {
+    expiresIn: process.env.JWT_REFRESH_EXPIRE || '7d'
   });
 };
 
