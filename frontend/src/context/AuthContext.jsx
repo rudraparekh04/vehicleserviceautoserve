@@ -12,8 +12,9 @@ export const AuthProvider = ({ children }) => {
 
   // Configure axios to send cookies
   axios.defaults.withCredentials = true;
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
   const api = axios.create({
-    baseURL: 'http://localhost:5000/api',
+    baseURL: `${API_URL}/api`,
     withCredentials: true,
   });
 
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }) => {
       if (error.response?.status === 401 && !originalRequest._retry && !originalRequest.url.includes('/auth/login') && !originalRequest.url.includes('/auth/register')) {
         originalRequest._retry = true;
         try {
-          const res = await axios.post('http://localhost:5000/api/auth/refresh', {}, { withCredentials: true });
+          const res = await axios.post(`${API_URL}/api/auth/refresh`, {}, { withCredentials: true });
           accessToken = res.data.accessToken;
           api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
           return api(originalRequest);
@@ -54,7 +55,7 @@ export const AuthProvider = ({ children }) => {
     const initAuth = async () => {
       try {
         // Try to refresh token first
-        const res = await axios.post('http://localhost:5000/api/auth/refresh', {}, { withCredentials: true });
+        const res = await axios.post(`${API_URL}/api/auth/refresh`, {}, { withCredentials: true });
         accessToken = res.data.accessToken;
         setUser(res.data.user);
       } catch (err) {
